@@ -2,4 +2,4 @@
 *.css linguist-vendored=false
 *.scss linguist-vendored=false
 *.less linguist-vendored=false
-*.html linguist-vendored=false
+*.html linguist-detectable=false
