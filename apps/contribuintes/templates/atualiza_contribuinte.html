@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box">
+              <div class="box-body">
+                          <form method="post">{% csrf_token %}
+                              {{ form.as_p }}
+                              <input type="submit" value="Atualizar">
+                          </form>
+              </div>
+          </div><!--/.col (left) -->
+        </div>
+    </div>
+
+</section>
+{% endblock %}

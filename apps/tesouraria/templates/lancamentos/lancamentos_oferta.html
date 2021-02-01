@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- / .main-navbar -->
+<div class="main-content-container container-fluid px-4">
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Salomon-g</span>
+    <h3 class="page-title">Lançamentos</h3>
+  </div>
+</div>
+<!-- End Page Header -->
+
+<div class="card">
+  <div class="card-header border-bottom bg-dark">
+    <a id="novoLancamento" class="mb-2 btn btn-sm btn-primary mr-1 text-white">
+      <i class="fas fa-plus-circle"></i>
+      <span>Novo Lançamento</span>
+    </a>
+  </div>
+  <div class="card-body">
+    <form method="get" class="form-row">
+      {% csrf_token %}
+      <div class="col-sm-1">
+        <small>Filtrar por:</small>
+      </div>
+      <div class="col-sm-2">
+        {% for fields in form %}
+          {{ form.ofertas }}
+        {% endfor %}
+      </div>
+      <div class="col-sm-2">
+        <button class="mb-2 btn btn-sm btn-dark mr-1" type="submit" value="Buscar">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <br>
+    <div class="table-responsive-sm card-body p-0 pb-3 text-center">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Referência<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Contribuinte<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Data Recebimento<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Valor<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col"><i class="fas fa-info-circle"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for lancamento in lancamentos_ %}
+          <tr>
+            <th scope="row">{{ lancamento.sigla }}</th>
+            <td>{{ lancamento.contribuinte }}</td>
+            <td>{{ lancamento.date }}</td>
+            <td>R$ {{ lancamento.valor }}</td>
+            <td><a href="{% url 'tesouraria:lancamento_oferta' lancamento.pk %}" class="mb-2 btn btn-sm btn-dark mr-1">Detalhes</a></td>
+          </tr>
+        {% empty %}
+        <div class="p-3">
+          <strong class="text-warning">
+            <i class="fas fa-info-circle"></i>
+            Nenhum Lançamento encontrado!</strong>
+        </div>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th>Referência<i class="fas fa-angle-up float-right"></i></th>
+            <th>Contribuinte<i class="fas fa-angle-up float-right"></i></th>
+            <th>Data Recebimento<i class="fas fa-angle-up float-right"></i></th>
+            <th>Valor<i class="fas fa-angle-up float-right"></i></th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+  <div class="card-footer">
+    <hr>
+    <nav aria-label="...">
+      {% if lancamentos_.has_other_pages %}
+      <ul class="pagination pagination-sm float-right">
+        {% if lancamentos_.has_previous %}
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ lancamentos_.previous_page_number }}">Anterior</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link sm" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+          </li>
+        {% endif %}
+        {% for i in lancamentos_.paginator.page_range %}
+          {% if lancamentos_.number == i %}
+            <li class="page-item active">
+              <span class="page-link">{{ i }}<span class="sr-only">(current)</span>
+              </span></li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if lancamentos_.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ users.next_page_number }}">Próxima</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">Próxima</span>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    </nav>
+  </div>
+</div>
+<br>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal" aria-labelledby="novoLancamentoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-white"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'scripts/jquery.bootstrap.modal.forms.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#novoLancamento").modalForm({
+        formURL: "{% url 'tesouraria:criar_lancamento_oferta' %}"
+    });
+
+  });
+</script>
+{% endblock %}

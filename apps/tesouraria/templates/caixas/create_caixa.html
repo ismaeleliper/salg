@@ -1,0 +1,62 @@
+<!-- Modal Criar Caixa -->
+
+<div class="modal-header">
+<h5 class="modal-title" id="novaOfertaLabel"><i class="fa fa-plus-circle"></i> Novo Caixa</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<form method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-md-9 {% if form.nome.errors %} invalid {% endif %}">
+        <small style="color: #3d5170;">Nome do Caixa</small>
+        {{ form.nome }}
+        {% for error in form.nome.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-9 {% if form.saldo.errors %} invalid {% endif %}">
+      <small style="color: #3d5170;">Saldo Inicial</small>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">R$</span>
+        </div>
+        {{ form.saldo }}
+        {% for error in form.saldo.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+    <div class="form-row">
+      <div class="form-group col-md-9 {% if form.responsavel.errors %} invalid {% endif %}">
+        <small style="color: #3d5170;">Responsável</small>
+        {{ form.responsavel }}
+        {% for error in form.responsavel.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-9">
+          <small style="color: #3d5170;">Descrição (opcional)</small>
+          {{ form.descricao }}
+      </div>
+    </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="mb-2 btn btn-sm btn-secondary mr-1" data-dismiss="modal">
+        <i class="fas fa-times"></i>
+         Cancelar
+    </button>
+    <button type="button" class="submit-btn mb-2 btn btn-sm btn-primary mr-1">
+        <span class="m-2">Criar</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</div>

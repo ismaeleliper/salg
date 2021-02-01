@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- / .main-navbar -->
+<div class="main-content-container container-fluid px-4">
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Salomon-g</span>
+    <h3 class="page-title">Lançamento</h3>
+  </div>
+</div>
+<!-- End Page Header -->
+{% for oferta in lancamento %}
+<div class="card card-small mb-4">
+  <div class="card-header border-bottom">
+    <br>
+    <button class="mb-2 btn btn-sm btn-white mr-1 float-right">
+      <i class="fas fa-trash-alt"></i>
+      Deletar
+    </button>
+    <button class="mb-2 btn btn-sm btn-white mr-1 float-right">
+      <i class="material-icons">more_vert</i>
+      Editar
+    </button>
+    <h5 class="m-0">{{ oferta.sigla }}</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <span>{{ user.profile.nome_da_igreja }}</span><br>
+        <small>{{ user.profile.rua }}, {{ user.profile.numero }} - {{ user.profule.bairro }} {{ user.profile.municipio }}</small><br>
+        <small>Fixo: {{ user.profile.telefone_fixo }} </small>
+        <small>|</small>
+        <small> Móvel: {{ user.profile.movel }}</small><br>
+        <small>Email: {{ user.profile.email_contato }}</small>
+      </div>
+      <div class="col">
+        <span>Contribuinte: {{ oferta.contribuinte }}</span><br>
+        <small>{{ oferta.contribuinte.classe }}</small><br>
+        <small>Contato: {{ oferta.contribuinte.contato }}</small>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-body p-0 pb-3 text-center">
+    <table class="table table-sm">
+      <thead class="bg-light">
+        <tr>
+          <th scope="col" class="border-0">#</th>
+          <th scope="col" class="border-0">Tipo De Contribuição</th>
+          <th scope="col" class="border-0">Data do Recebimento</th>
+          <th scope="col" class="border-0">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ oferta.oferta }}</td>
+          <td>{{ oferta.date }}</td>
+          <td>R$ {{ oferta.valor }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <th scope="col" class="border-0"></th>
+        <th scope="col" class="border-0"></th>
+        <th scope="col" class="border-0"></th>
+        <th scope="col" class="border-0">
+          <hr>
+          Total: R${{ oferta.valor }}
+        </th>
+      </tfoot>
+    </table>
+    <button class="mb-2 btn btn-sm btn-dark mr-1">Gerar PDF</button>
+  </div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lançamento Oferta</title>
+</head>
+<body>
+<span>< <a href="{% url 'tesouraria:lancamentos_oferta' %}">Todos os Lançamentos</a></span>
+<h2>Lançamento:</h2>
+<hr>
+{% for oferta in lancamento %}
+    <h3>{{ oferta.sigla }}</h3>
+    <p>*******************************************************</p>
+    <p>Nome do Contribuinte: [{{ oferta.contribuinte }}]</p>
+    <p>Tipo de Contribuição: [{{ oferta.oferta }}]</p>
+    <p>Data da Contribuição: [{{ oferta.data }}]</p>
+    <p>Caixa: <a href="{% url 'tesouraria:lancamentos_oferta_caixa' cx %}">{{ oferta.lancar_no_caixa }}</a></p>
+    <p>Responsavel: {{ oferta.responsavel }}</p>
+    <p>*******************************************************</p>
+    <h4>Valor: R${{ oferta.valor }}</h4>
+
+{% endfor %}
+</body>
+</html>
+--:

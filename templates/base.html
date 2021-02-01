@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="no-js h-100" lang="pt-BR">
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie-edge">
+	<meta name="description" content="#TODO">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- FontAwesome 5.0.6 -->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/fontawesome-free-5.15.1-web/css/all.min.css' %}">
+	<!-- Google Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Bootstrap 4.1.3 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <!-- Shards-Dashboards 1.1.0 -->
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="{% static 'styles/shards-dashboards.1.1.0.min.css' %}">
+
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/app/style.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css' %}">
+
+    {% block styles %}
+    {% endblock %}
+
+	  <title>{{ title }} - SALOMON-G</title>
+</head>
+<body class="h-100">
+    <!-- Container -->
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Main Sidebar -->
+        <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+          <div class="main-navbar">
+            <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+              <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
+                <div class="d-table m-auto">
+                  <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{% static 'images/avatars/sal-logo.png' %}">
+                  <span class="d-none d-md-inline ml-1">SALOMON-G</span>
+                </div>
+              </a>
+              <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+                <i class="material-icons">&#xE5C4;</i>
+              </a>
+            </nav>
+          </div>
+          <form action="#" class="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none">
+            <div class="input-group input-group-seamless ml-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              <input class="navbar-search form-control" type="text" placeholder="Pesquisar por..." aria-label="Search"> </div>
+          </form>
+          <h6 class="main-sidebar__nav-title"> Painel Salomon-G </h6>
+          <div class="nav-wrapper">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link {{ active_painel }}" href="{% url 'core:indice' %}">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>Visão Geral</span>
+                </a>
+              </li>
+            </ul>
+            <h6 class="main-sidebar__nav-title"> Tesouraria Salomon-G </h6>
+
+            <ul class="nav flex-column">
+              <li class="nav-item">
+              <a class="nav-link {{ active_lancamentos }}" href="{% url 'tesouraria:lancamentos_oferta' %}" >
+                  <i class="fas fa-list"></i>
+                  <span>Lançamentos</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {{ active_contribuintes }}" href="{% url 'contribuintes:contribuintes' %}">
+                  <i class="fa fa-users"></i>
+                  <span>Contribuintes</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {{ active_ofertas }}" href="{% url 'tesouraria:ofertas' %}">
+                  <i class="fa fa-hand-holding-usd"></i>
+                  <span>Ofertas</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {{ active_caixas }}" href="{% url 'tesouraria:caixas' %}">
+                  <i class="fas fa-funnel-dollar"></i>
+                  <span>Caixas</span>
+                </a>
+              </li>
+            </ul>
+            <h6 class="main-sidebar__nav-title"> Usuário Salomon-G </h6>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link {{ active_perfil }}" href="{% url 'profiles:config' %}">
+                  <i class="fas fa-user-cog"></i>
+                  <span>Configurar Perfil</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <!-- End Main Sidebar -->
+
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+          <div class="main-navbar sticky-top bg-white">
+            <!-- Main Navbar -->
+            <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+              <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+                <div class="input-group input-group-seamless ml-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <input class="navbar-search form-control" type="text" placeholder="Pesquisar por..." aria-label="Search"> </div>
+              </form>
+              <ul class="navbar-nav border-left flex-row ">
+                <li class="nav-item border-right dropdown notifications">
+                  <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="nav-link-icon__wrapper">
+                      <i class="material-icons">&#xE7F4;</i>
+                      <span class="badge badge-pill badge-danger">2</span>
+                    </div>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">
+                      <div class="notification__icon-wrapper">
+                        <div class="notification__icon">
+                          <i class="material-icons">&#xE6E1;</i>
+                        </div>
+                      </div>
+                      <div class="notification__content">
+                        <span class="notification__category">Analytics</span>
+                        <p>Your website’s active users count increased by
+                          <span class="text-success text-semibold">28%</span> in the last week. Great job!</p>
+                      </div>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <div class="notification__icon-wrapper">
+                        <div class="notification__icon">
+                          <i class="material-icons">&#xE8D1;</i>
+                        </div>
+                      </div>
+                      <div class="notification__content">
+                        <span class="notification__category">Contribuições</span>
+                        <p>Last week your store’s sales count decreased by
+                          <span class="text-danger text-semibold">5.52%</span>. It could have been worse!</p>
+                      </div>
+                    </a>
+                    <a class="dropdown-item notification__all text-center" href="#"> View all Notifications </a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img class="user-avatar rounded-circle mr-2" src="{{ user.profile.profile_image.url }}" width="35px" height="35px">
+                    <span class="d-none d-md-inline-block">{{ user.profile.nome }}</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-small">
+                    <a class="dropdown-item" href="user-profile-lite.html">
+                      <i class="material-icons">&#xE7FD;</i> Perfil</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">
+                      <i class="material-icons text-danger">&#xE879;</i> Sair </a>
+                  </div>
+                </li>
+              </ul>
+              <nav class="nav">
+                <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
+                  <i class="material-icons">&#xE5D2;</i>
+                </a>
+              </nav>
+            </nav>
+          </div>
+
+          {% block content %}
+
+          {% endblock %}
+
+          <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+            </ul>
+            <span class="copyright ml-auto my-auto mr-2">Copyright © 2018
+              <a href="https://designrevision.com" rel="nofollow">DesignRevision</a>
+            </span>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+
+    <!-- JQuery 3.3.1 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>-->
+
+    <!-- Popper 1.14.3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- jQuery-Sharrre 2.0.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
+
+    <!-- Bootstrap 4.1.3 -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+
+    <!-- #TODO - Baixar Source files -->
+    <!-- Chart 2.7.1 -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>-->
+
+    <script src="{% static 'chart.js/dist/Chart.min.js' %}"></script>
+
+    <!-- Shards-dashboards 1.1.0 -->
+    <script src="{% static 'scripts/shards-dashboards.1.1.0.min.js' %}" type="text/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+
+	{% block scripts %}{% endblock %}
+</body>
+</html>

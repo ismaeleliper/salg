@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if message %}
+  <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+     <span aria-hidden="true">×</span>
+    </button>
+      <i class="fas fa-exclamation-circle"></i> {{message_content}}
+  </div>
+  <br>
+{% endif %}
+{% if message_double_cx %}
+  <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+     <span aria-hidden="true">×</span>
+    </button>
+      <i class="fas fa-exclamation-circle"></i> Foram selecionados os mesmos caixas, corrija para continuar...
+  </div>
+  <br>
+{% endif %}
+<!-- / .main-navbar -->
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Salomon-g</span>
+      <h3 class="page-title">Transferências Entre Caixas</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+    <div class="card card-small">
+        <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-5 {% if form.caixa.errors %} invalid is_invalid {% endif %}">
+                        <small style="color: #3d5170;">Selecione um Caixa à Receber</small>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-plus text-success"></i></span>
+                        </div>
+                        {{ form.caixa }}
+                        {% for error in form.caixa.errors %}
+                          <small class="help-block text-danger">{{ error }}</small>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="form-group col-md-5 {% if form.cxa_a_debitar.errors %} invalid {% endif %}">
+                      <small style="color: #3d5170;">Selecione um Caixa à Debitar</small>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-minus text-danger"></i></span>
+                        </div>
+                        {{ form.cxa_a_debitar }}
+                        {% for error in form.cxa_a_debitar.errors %}
+                          <small class="help-block text-danger">{{ error }}</small>
+                        {% endfor %}
+                      </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5 {% if form.valor.errors %} invalid {% endif %}">
+                      <small style="color: #3d5170;">Valor</small>
+                      <div id="valor" class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">R$</span>
+                        </div>
+                        {{ form.valor }}
+                        {% for error in form.valor.errors %}
+                          <small class="help-block text-danger">{{ error }}</small>
+                        {% endfor %}
+                      </div>
+                    </div>
+
+                  <div class="form-group col-md-5 {% if form.responsavel.errors %} invalid {% endif %}">
+                    <small style="color: #3d5170;">Responsável</small>
+                    {{ form.responsavel }}
+                    {% for error in form.responsavel.errors %}
+                      <small class="help-block text-danger">{{ error }}</small>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-10">
+                      <small style="color: #3d5170;">Informações Adicionais (opcional)</small>
+                      {{ form.info_adicional }}
+                  </div>
+                </div>
+                <div class="form-row">
+                    <button type="button" class="mb-2 btn btn-sm btn-secondary mr-1">
+                        <i class="fas fa-times"></i>
+                         Cancelar
+                    </button>
+                    <button type="submit" class="submit-btn mb-2 btn btn-sm btn-primary mr-1">
+                        <span class="m-2">Efetuar Transferência</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+              </form>
+          </div>
+        </div>
+ </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% if message %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#inputValor").addClass('is-invalid');
+    $( "#valor" ).append( "<div class='invalid-feedback'>Consulte o saldo do caixa, e corrija o valor.</div>" );
+});
+</script>
+{% endif %}
+{% endblock %}
+
+

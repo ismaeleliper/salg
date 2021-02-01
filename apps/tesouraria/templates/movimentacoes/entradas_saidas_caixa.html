@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Salomon-g</span>
+      <h3 class="page-title">Caixas</h3>
+    </div>
+  </div>
+    <div class="card">
+        <div class="card-header bg-dark">
+                <a class="text-white mr-2 mb-2 btn btn-sm btn-secondary" href="{% url 'tesouraria:lancamentos_oferta_caixa' pk %}">
+                    <i class="fas fa-arrow-right"></i>
+                     Lançamentos No Caixa
+                </a>
+                <a class="text-white mr-2 mb-2 btn btn-sm btn-secondary" href="{% url 'tesouraria:movimentacoes' pk %}">
+                    <i class="fas fa-compress-alt"></i>
+                     Movimentações entre Caixas
+                </a>
+                <a class="text-white mr-2 mb-2 btn btn-sm btn-secondary" href="{% url 'tesouraria:editar_caixa' pk %}">
+                    <i class="material-icons">more_vert</i>
+                    Editar Caixa
+                </a>
+        </div>
+        <div class="card-body">
+            <div>
+                {% for dado in dados %}
+                    <h2>Caixa: {{ dado.nome }}</h2>
+                    <span>Saldo: R$</span><span class="text-success">{{ dado.saldo }}</span>
+                    <p>Responsável: {{ dado.responsavel }}</p>
+                {% endfor %}
+            </div>
+            <hr>
+            <h5>Entradas:</h5>
+            {% for entrada in entradas %}
+                <p>{{ entrada.sigla }} - R${{ entrada.valor }} - {{ entrada.date_entrada }} - {{ entrada.responsavel }}</p>
+            {% endfor %}
+            <hr>
+            <h5>Saidas:</h5>
+            {% for saida in saidas %}
+                <p>{{ saida.sigla }} - R${{ saida.valor }} - {{ saida.date_saida }} - {{ saida.responsavel }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

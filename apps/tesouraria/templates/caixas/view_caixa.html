@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Salomon-g</span>
+      <h3 class="page-title">Caixas</h3>
+    </div>
+  </div>
+    <div class="card">
+        <div class="card-header bg-dark">
+                <a class="text-white mr-2 mb-2 btn btn-sm btn-secondary" href="{% url 'tesouraria:lancamentos_oferta_caixa' pk %}">
+                    <i class="fas fa-arrow-right"></i>
+                     Lançamentos No Caixa
+                </a>
+                <a class="text-white mr-2 mb-2 btn btn-sm btn-secondary" href="{% url 'tesouraria:movimentacoes' pk %}">
+                    <i class="fas fa-compress-alt"></i>
+                     Movimentações entre Caixas
+                </a>
+                <button id="updateCaixa" class="text-white mr-2 mb-2 btn btn-sm btn-secondary">
+                    <i class="material-icons">more_vert</i>
+                    Editar Caixa
+                </button>
+        </div>
+        <div class="card-body">
+            {% for dado in dados %}
+            <h2>CX/{{dado.pk}} - {{ dado.nome }}</h2>
+            <hr>
+            <div class="badge badge-pill badge-success">SALDO</div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal" aria-labelledby="updateCaixaLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-white"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'scripts/jquery.bootstrap.modal.forms.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    '{% for dado in dados %}'
+    $("#updateCaixa").modalForm({
+
+        formURL: "{% url 'tesouraria:editar_caixa' dado.pk %}"
+    });
+    '{% endfor %}'
+
+  });
+</script>
+{% endblock %}

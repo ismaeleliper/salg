@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<span>< Voltar <a href="{% url 'core:indice' %}">Menu</a>
+    <span> / </span>
+    <a href="#">Ofertas</a>
+</span>
+{% for oferta in ofertas %}
+    <h2>Oferta : {{ oferta.nome }}</h2>
+    <p>{{ oferta.nome }} - {{ oferta.responsavel }}</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,90 @@
+
+{% load static %}
+
+<div class="modal-header">
+<h5 class="modal-title" id="novoContribuinteLabel">
+    <i class="fa fa-plus-circle"></i>
+    Novo Contribuinte
+</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<form method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-md-12 {% if form.nome.errors %} invalid {% endif %}">
+      <small style="color: #3d5170;">Nome Completo</small>
+        {{ form.nome }}
+        {% for error in form.nome.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-5 {% if form.data_nasc.errors %} invalid {% endif %}">
+      <small style="color: #3d5170;">Data de Nascimento</small>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+        </div>
+        {{ form.data_nasc }}
+        {% for error in form.data_nasc.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-group col-md-6 {% if form.contato.errors %} invalid {% endif %}">
+      <small style="color: #3d5170;">Contato</small>
+      <div class="input-group mb-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+        </div>
+        {{ form.contato }}
+        {% for error in form.contato.errors %}
+          <small class="help-block text-danger">{{ error }}</small>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-8 {% if form.classe.errors %} invalid {% endif %}">
+      <small style="color: #3d5170;">Classificação</small>
+      {{ form.classe }}
+      {% for error in form.classe.errors %}
+        <small class="help-block text-danger">{{ error }}</small>
+      {% endfor %}
+    </div>
+  </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="mb-2 btn btn-sm btn-secondary mr-1" data-dismiss="modal">
+        <i class="fas fa-times"></i>
+         Cancelar
+    </button>
+    <button type="button" class="submit-btn mb-2 btn btn-sm btn-primary mr-1">
+        <span class="m-2">Criar</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+
+<script type="text/javascript">
+  var element = document.getElementById('date');
+  var maskOptions = {
+    mask: Date,
+    min: new Date(1900, 0, 1),
+    max: new Date(2021, 0, 1),
+    lazy: true,
+  };
+
+  var mask = IMask(element, maskOptions);
+
+  var phoneMask = IMask(
+    document.getElementById('celular'), {
+      mask: '+{55} (00) 00000-0000'
+    });
+
+</script>
+

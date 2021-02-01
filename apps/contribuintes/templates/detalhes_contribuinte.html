@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- / .main-navbar -->
+<div class="main-content-container container-fluid px-4">
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Salomon-G</span>
+    <h3 class="page-title">Contribuinte</h3>
+  </div>
+</div>
+<!-- End Page Header -->
+<div class="card">
+  <div class="card-header bg-dark">
+        <a href="" class="mb-2 btn btn-sm btn-white mr-1 float-right">
+          <i class="material-icons">more_vert</i>
+          Atualizar Informações
+        </a>
+        <div class="text-fiord-blue mt-3">
+          <h5 class="text-white">CONTR/{{ object.pk }}: {{ object.nome }}</h5>
+          <p class="card-text d-inline-block mb-1"><a class=" btn btn-sm btn-success mr-1" href="https://web.whatsapp.com/{{ object.contato }}"><i class="fab fa-whatsapp"></i>
+        {{object.contato}}</a></p><br>
+        </div>
+  </div>
+  <div class="card-body">
+    <h6 class="text-center"><i class="fas fa-list"></i> Histórico de Contribuições</h6>
+    <hr>
+    <div class="table-responsive-sm card-body p-0 pb-3 text-center">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Referência<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Oferta<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Contribuinte<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Data Recebimento<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col">Valor<i class="fas fa-angle-down float-right"></i></th>
+            <th scope="col"><i class="fas fa-info-circle"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for contribuicao in contribuicoes %}
+          <tr>
+            <th scope="row">{{ contribuicao.sigla }}</th>
+            <td>{{ contribuicao.oferta }}</td>
+            <td>{{ contribuicao.contribuinte }}</td>
+            <td>{{ contribuicao.date }}</td>
+            <td>R$ {{ contribuicao.valor }}</td>
+            <td><a href="{% url 'tesouraria:lancamento_oferta' contribuicao.pk %}" class="mb-2 btn btn-sm btn-dark mr-1">Detalhes</a></td>
+          </tr>
+        {% empty %}
+           <div class="p-3">
+             <strong class="text-warning">
+               <i class="fas fa-info-circle"></i>
+               Nenhuma Contribuição Encontrada!
+             </strong>
+          </div>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+</div>
+{% endblock %}

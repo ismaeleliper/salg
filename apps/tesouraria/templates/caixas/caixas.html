@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- / .main-navbar -->
+<div class="main-content-container container-fluid px-4">
+  <!-- Page Header -->
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Salomon-g</span>
+      <h3 class="page-title">Caixas</h3>
+    </div>
+  </div>
+  <!-- End Page Header -->
+  <div class="card  mb-4 bg-dark pt-2">
+    <div class="col-md-12">
+      <button id="novoCaixa" class="mb-2 btn btn-sm btn-primary mr-1">
+      <i class="fa fa-plus-circle"></i>
+       Novo Caixa
+      </button>
+      <a href="{% url 'tesouraria:criar-entrada-manual' %}" class="mb-2 btn btn-sm btn-primary mr-1">
+        <i class="fa fa-plus-circle"></i>
+         Nova Transferência Entre Caixas
+      </a>
+    </div>
+
+  </div>
+
+  <div class="row">
+  {% for caixa in caixas %}
+    <div class="col-12 col-md-6 col-lg-3 mb-4">
+      <div class="stats-small card card-small">
+        <div class="card-body">
+          <span class="stats-small__label mb-1 text-uppercase">Caixa</span>
+          <h6 class="stats-small__value">{{ caixa.nome }}</h6>
+          <span class="stats-small__label mb-1 text-uppercase">Saldo</span>
+          <h6 class="stats-small__value">R$ <span class="text-success">{{ caixa.saldo }}</span></h6>
+          <a href="{% url 'tesouraria:caixa' caixa.pk %}" class="mb-2 btn btn-sm btn-dark mr-1">Detalhes</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal" aria-labelledby="novoLancamentoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-white"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'scripts/jquery.bootstrap.modal.forms.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#novoCaixa").modalForm({
+        formURL: "{% url 'tesouraria:criar_caixa' %}"
+    });
+
+  });
+</script>
+{% endblock %}
